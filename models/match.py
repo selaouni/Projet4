@@ -29,9 +29,4 @@ class Matchs:
     def __str__(self):
         return f"{self.match_number} : {self.player1} --CONTRE-- {self.player2}."
 
-x = Matchs("K045","Sabah", "Sara", 1, 1)
-print(x)
-P1 = Player("Sabah","ELAOUNI","07081985",Femme,1,10)
-P2 = Player("Sara","ELAOUNI","07081994",Femme,1,10)
-z= x.match_pairing(P1,P2)
-print(z)
+
