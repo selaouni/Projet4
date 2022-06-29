@@ -9,6 +9,8 @@ class Matchs:
         self.score_player1 = score_player1
         self.score_player2 = score_player2
 
+    def __str__(self):
+        return f"{self.match_number} : {self.player1} --CONTRE-- {self.player2}."
 
     def add_Match(self):
         Match_information = {}
@@ -26,12 +28,33 @@ class Matchs:
         print (match)
 
 
-    def __str__(self):
-        return f"{self.match_number} : {self.player1} --CONTRE-- {self.player2}."
+    def match_result(self):
+        match_list = []
+        date_list.append(self.birth_year)
+        valid_score1= False
+        while not valid_score1:
+            score_player1 = input("Saisir le score du premier joueur (gagnant = 1), (match nul = 0,5),(pardant = 0)  :")
 
-x = Matchs("K045","Sabah", "Sara", 1, 1)
-print(x)
-P1 = Player("Sabah","ELAOUNI","07081985",Femme,1,10)
-P2 = Player("Sara","ELAOUNI","07081994",Femme,1,10)
-z= x.match_pairing(P1,P2)
-print(z)
+            if score_player1 != 1 and score_player1 != 0.5 and score_player1 != 0:
+                print("Erreur: Merci de saisir  comme score : 1, 0.5, ou 0")
+            else:
+                self.score_player1 = score_player1
+
+
+        valid_score2 = False
+        while not valid_score2:
+            score_player2 = input("Saisir le score du deuxieme joueur (gagnant = 1), (match nul = 0,5),(pardant = 0): ")
+
+            if score_player2 != 1 and score_player2 != 0.5 and score_player2 != 0:
+                print("Erreur: Merci de saisir  comme score : 1, 0.5, ou 0")
+            else:
+                self.score_player2 = score_player2
+
+        return match_list.append(self.score_player1,self.score_player2)
+
+
+
+
+
+
+

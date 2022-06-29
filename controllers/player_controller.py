@@ -1,4 +1,5 @@
 from controllers import base_controller
+from models import player
 
 
 class CreatePlayerController:
@@ -32,11 +33,11 @@ class CreatePlayerController:
 
     def add_birth_date(self):
         birthdate_list = []
-
+        print("-------------Debut de la saisie de la date---------------")
         valid_day = False
         while not valid_day:
             self.birth_day = input("Entrez le jour de naissance du joueur: ")
-            if  len(self.birth_day) == 2 and int(self.birth_day) < 32 and self.birth_day.isdigit():
+            if  len(self.birth_day) == 2 and int(self.birth_day) < 32 and self.birth_day != "00" and self.birth_day.isdigit():
                 valid_day = True
                 birthdate_list.append(self.birth_day)
             else:
@@ -45,7 +46,7 @@ class CreatePlayerController:
         valid_month = False
         while not valid_month:
             self.birth_month = input("Entrez le mois de naissance En chiffre: ")
-            if  len(self.birth_month) == 2 and int(self.birth_month) < 13 and self.birth_month.isdigit():
+            if  len(self.birth_month) == 2 and int(self.birth_month) < 13 and self.birth_month != "00" and self.birth_month.isdigit():
                 valid_month = True
                 birthdate_list.append(self.birth_month)
             else:
@@ -54,11 +55,11 @@ class CreatePlayerController:
         valid_year = False
         while not valid_year:
             self.birth_year = input("Entrez l'année de naissance du joueur: ")
-            if  len(self.birth_year) == 4 and int(self.birth_year) < 2023 and self.birth_year.isdigit():
+            if  len(self.birth_year) == 4 and int(self.birth_year) < 2023 and self.birth_year != "0000" and self.birth_year.isdigit():
                 valid_year = True
                 birthdate_list.append(self.birth_year)
             else:
-                print("Erreur: Merci de saisir une année de naissance valide (en 4 chiffres)")
+                print("Erreur: Merci de saisir une année de naissance valide en 4 chiffres")
 
         return f"{birthdate_list[0]}/{birthdate_list[1]}/{birthdate_list[2]}"
 
@@ -78,7 +79,7 @@ class CreatePlayerController:
                 print("Erreur: Merci de saisir un genre valide 'Homme' ou 'Femme'")
         return validated_gender
 
-    def add_rank(self):
+    def add_rank(self= None):
         valid_rank = False
         while not valid_rank:
             rank = input("Saisir le classement du joueur: ")
@@ -102,7 +103,10 @@ class CreatePlayerController:
         self.main_controller_menu()
 
 class Player_Report:
-        pass
+
+        def __call__(self):
+            print(" --------------------------- Rapport joueur --------------------------- ")
+
 
 
 """

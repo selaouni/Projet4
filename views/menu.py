@@ -14,10 +14,11 @@ class FirstTitles:
 class Menu:
 
     main_menu = [("1", "Créer un nouveau joueur"),
-                    ("2", "Mettre à jour un joueur"),
-                    ("3", "Créer un nouveau tournoi"),
-                    ("4","Reprendre un tournoi"),
-                    ("5", "Rapport"),]
+                ("2", "Mettre à jour un joueur"),
+                ("3", "Créer un nouveau tournoi"),
+                ("4","Reprendre un tournoi"),
+                ("5", "Rapport joueurs"),
+                ("6", "Rapport tournoi"),]
 
 
 

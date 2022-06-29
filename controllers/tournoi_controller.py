@@ -3,6 +3,7 @@
 from models import tournoi
 from models import player
 from controllers import base_controller
+from views import menu
 
 
 class CreateTournoiController:
@@ -18,11 +19,11 @@ class CreateTournoiController:
     def add_name(self):
         valid_name = False
         while not valid_name:
-            tournoi_name = input("Saisir le nom du tournoi - exemple : Round1")
-            if tournoi_name != "" and tournoi_name.isalpha():
+            tournoi_name = input("Saisir le nom du tournoi - exemple -> Round1: ")
+            if tournoi_name != "":
                 valid_name = True
             else:
-                print("Erreur: merci de saisir un nom")
+                print("Erreur: merci de saisir un nom valid")
         return tournoi_name
 
     def add_Place(self):
@@ -37,12 +38,12 @@ class CreateTournoiController:
 
     def add_tournoi_date(self):
         date_list = []
-        print("-------Debut de la saisie de la date du tournoi-------")
+        print("--------------Debut de la saisie de la date du tournoi----------------")
         valid_day = False
         while not valid_day:
 
             self.birth_day = input("saisir le jour du tournoi: ")
-            if  int(self.birth_day) < 32 and len(self.birth_day) == 2 and self.birth_day.isdigit():
+            if  int(self.birth_day) < 32 and len(self.birth_day) == 2 and self.birth_day != "00" and self.birth_day.isdigit():
                 valid_day = True
                 date_list.append(self.birth_day)
             else:
@@ -51,16 +52,16 @@ class CreateTournoiController:
         valid_month = False
         while not valid_month:
             self.birth_month = input("saisir le mois du tournoi:")
-            if  int(self.birth_month) < 13 and len(self.birth_month) == 2 and self.birth_month.isdigit():
+            if int(self.birth_month) < 13 and len(self.birth_month) == 2 and self.birth_month != "00" and self.birth_month.isdigit():
                 valid_month = True
                 date_list.append(self.birth_month)
             else:
-                print("Erreur: Merci de saisir un nombre à 2 chiffres inférieur à 12")
+                print("Erreur: Merci de saisir un nombre valide,  à 2 chiffres et inférieur à 12")
 
         valid_year = False
         while not valid_year:
             self.birth_year = input("saisir l'année du tournoi: ")
-            if  len(self.birth_year) == 4 and self.birth_year.isdigit():
+            if  len(self.birth_year) == 4 and  self.birth_year != "0000" and self.birth_year.isdigit():
                 valid_year = True
                 date_list.append(self.birth_year)
             else:
@@ -71,7 +72,7 @@ class CreateTournoiController:
     def number_of_tours(self):
         number_tours = 4
         return number_tours
-    def add_timing(self)
+    def add_timing(self):
         pass
 
     def add_description(self):
@@ -101,7 +102,10 @@ class Tournoi_run:
     pass
 
 class TournoiReport:
-    pass
+
+
+    def __call__(self):
+        print(" --------------------------- Rapport tournoi --------------------------- ")
 
 
 
