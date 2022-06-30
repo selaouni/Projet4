@@ -31,6 +31,7 @@ class CreatePlayerController:
         return first_name
 
 
+
     def add_birth_date(self):
         birthdate_list = []
         print("-------------Debut de la saisie de la date---------------")

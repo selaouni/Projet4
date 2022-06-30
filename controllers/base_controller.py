@@ -4,7 +4,6 @@ from controllers import tournoi_controller
 from models import player
 
 
-
 class MainMenuController:
 
     def __init__(self):

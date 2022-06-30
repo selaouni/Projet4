@@ -36,6 +36,7 @@ class CreateTournoiController:
                 print("Erreur: Merci de saisir une localisation correcte")
         return place
 
+
     def add_tournoi_date(self):
         date_list = []
         print("--------------Debut de la saisie de la date du tournoi----------------")
