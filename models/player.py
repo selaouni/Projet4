@@ -1,3 +1,6 @@
+from tinydb import TinyDB
+
+
 class Player:
     def __init__(self, first_name = None, last_name = None, birth_Date = None, gender = None, rank = 0, score = 0):
         self.first_name = first_name
@@ -7,7 +10,10 @@ class Player:
         self.rank = rank
         self.score = score
 
-    def create_player (self):
+        self.db_player = TinyDB('DB_players.json')
+
+
+    def serialize(self):
         player_information = {}
         player_information['Nom'] = self.last_name
         player_information['Prenom'] = self.first_name
@@ -16,6 +22,17 @@ class Player:
         player_information['Classement'] = self.rank
         player_information['Score'] = self.score
         return player_information
+
+
+    def save_player(self, player_info):
+        player = Player(player_info[0],
+                        player_info[1],
+                        player_info[2],
+                        player_info[3],
+                        player_info[4]
+                        )
+        db_player = self.db_player
+        db_player.insert(player.serialize())
 
 
     def update_rank(self):
@@ -32,20 +49,9 @@ class Player:
             rank = input("Saisir le nouveau classement du joueur: ")
             if rank.isdigit() and int(rank) >= 0:
                 valid_rank = True
+                self.db_player.update({'classement': self.rank},self.last_name == player_name)
             else:
                 print("Erreur: merci de saisir un chiffre positif")
             return rank
 
 
-"""
-player = Player( 'Sabah', 'ELAOUNI', 1985, 'Femme', 1, 10)
-creation_joueur = Player.create_player(self=player)
-print ("Nom: ",player.first_name)
-print ("Prénom: ",player.last_name)
-print ("Date de naissance: ",player.birth_Date)
-print ("genre: ",player.gender)
-print ("classement: ",player.rank)
-print ("score: ",player.score)
-print(creation_joueur)
-MiseAjour =  player.update_ranking()
-"""
