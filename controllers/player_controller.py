@@ -6,8 +6,19 @@ class CreatePlayerController:
 
     def __init__(self):
         self.player_value = []
-        self.player_info = ["Nom", "Prénom", "Date de naissance", "Genre", "Classement"]
+        self.player_info = ["id","Nom", "Prénom", "Date de naissance", "Genre", "Classement"]
         self.main_controller_menu = base_controller.MainMenuController()
+
+    def add_id(self):
+        valid_id = False
+        while not valid_id:
+
+            id = input("Entrez l'id du joueur': ")
+            if id != "" and id.isdigit():
+                valid_id = True
+            else:
+                print("Erreur: merci de saisir un id valide")
+        return id
 
     def add_last_name(self):
         valid_last_name = False
@@ -80,15 +91,18 @@ class CreatePlayerController:
                 print("Erreur: Merci de saisir un genre valide 'Homme' ou 'Femme'")
         return validated_gender
 
-    def add_rank(self= None):
+    def add_rank(self):
         valid_rank = False
         while not valid_rank:
-            rank = input("Saisir le classement du joueur: ")
-            if rank.isdigit() and int(rank) >= 0:
+
+            rank_player= input("Entrez le classement du joueur': ")
+            if rank_player != "" and rank_player.isdigit() and int(rank_player) > 0 :
                 valid_rank = True
             else:
-                print("Erreur: Merci de saisir un nombre entier positif")
-        return int(rank)
+                print("Erreur: merci de saisir un chiffre positif")
+        return rank_player
+
+
 
 
 
@@ -96,11 +110,14 @@ class CreatePlayerController:
     def __call__(self):
 
         self.player_model = player.Player()
-        self.player_value.append(self.add_last_name())
+        self.player_value.append(self.add_id())
         self.player_value.append(self.add_first_name())
+        self.player_value.append(self.add_last_name())
         self.player_value.append(self.add_birth_date())
         self.player_value.append(self.add_gender())
         self.player_value.append(self.add_rank())
+        self.player_model.save_player(self.player_value)
+        print("Message info: joueur sauvegardé dans la base de donnée")
         self.main_controller_menu()
 
 class Player_Report:
@@ -110,19 +127,6 @@ class Player_Report:
 
 
 
-"""
-Player_object = CreatePlayerController()
-Player_FirstName= CreatePlayerController.add_first_name(self=Player_object)
-Player_lastName = CreatePlayerController.add_last_name(self=Player_object)
-Player_BirthDate= CreatePlayerController.add_birth_date(self=Player_object)
-Player_Gender = CreatePlayerController.add_gender(self=Player_object)
-Player_Ranking = CreatePlayerController.add_ranking(self=Player_object)
-print(Player_FirstName)
-print(Player_lastName)
-print(Player_BirthDate)
-print(Player_Gender)
-print(Player_Ranking)
-"""
 
 
 

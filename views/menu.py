@@ -1,24 +1,26 @@
 #from controllers import (player_controller, tournoi_controller)
+import json
+#from controllers import tournoi_controller
 
 
 class FirstTitles:
 
-    def Titles(self):
+    def titles(self):
         print("-------------------- Bienvenue - Tournoi d'échecs --------------------")
         print("-" * 70)
         print("-" * 70)
-        print("-----------------------Menu principal---------------------------------")
+        print("----------------------- Menu principal ---------------------------------")
         print("-" * 70)
 
 
 class Menu:
-
     main_menu = [("1", "Créer un nouveau joueur"),
                 ("2", "Mettre à jour un joueur"),
                 ("3", "Créer un nouveau tournoi"),
-                ("4","Reprendre un tournoi"),
+                ("4", "Reprendre un tournoi"),
                 ("5", "Rapport joueurs"),
-                ("6", "Rapport tournoi"),]
+                ("6", "Rapport tournoi"),
+                ("7", "Quitter")]
 
 
 
@@ -28,11 +30,6 @@ class Menu:
                    ("4", "Afficher les matchs"),
                    ("5", "Afficher les joueurs selon leurs classements"),]
 
-#   def __init__(self):
-#        self.create_player = player_controller.CreatePlayerController()
-#        self.create_tournoi = tournoi_controller.CreateTournoiController()
-
-
     def __call__(self, menu):
         for i in menu:
             print(" - " + i[0] + " - " + i[1])
@@ -41,51 +38,65 @@ class Menu:
             for line in menu:
                 if data == line[0]:
                     return str(line[0])
-
-
             print("Erreur ! Merci de saisir l'un des chiffres affichés")
 
+class Menu_tournoi:
+
+    # def __init__(self):
+    #
+    #     self.createTournoiController = tournoi_controller.CreateTournoiController()
+
+    def add_player_menu(self):
+
+        print("merci de choisir l'id'de joueurs à ajouter au tournoi")
+        player1 = input("joueur N°1 : ")
+        player2 = input("joueur N°2 : ")
+        player3 = input("joueur N°3 : ")
+        player4 = input("joueur N°4 : ")
+        player5 = input("joueur N°5 : ")
+        player6 = input("joueur N°6 : ")
+        player7 = input("joueur N°7 : ")
+        player8 = input("joueur N°8 : ")
+        print("------- Les joueurs que vous avez choisi sont")
+
+        NBR_PLAYER = 8
+        player_list = []
+        for i in range(NBR_PLAYER):
+            player_list.append(int(locals()["player" + str(i + 1)]))
+        return player_list
+
+
+    # def __call__(self):
 
 
 
-"""
-print ("--------------------------------------------------------------------------------------------------------")
-x = Menu()
-print(x.main_menu)
-print(x.report_menu)
-print("*"*50)
-y = x.__call__(x.report_menu)
-
-print(y)
-
-print ("--------------------------------------------------------------------------------------------------------")
 
 
 
-print ("--------------------------------------------------------------------------------------------------------")
 
 
 
-print ("--------------------------------------------------------------------------------------------------------")
-Instance_main_menu = MainMenu.main_menu
-print(Instance_main_menu)
-print ("--------------------------------------------------------------------------------------------------------")
-Instance_player_menu = MainMenu.player_menu
-print (Instance_player_menu)
-Instance_tournoi_menu = MainMenu.tournoi_menu
-print ("--------------------------------------------------------------------------------------------------------")
-print (Instance_tournoi_menu)
-Instance_tournoi_report = MainMenu.tournoi_report_menu
-print ("--------------------------------------------------------------------------------------------------------")
-print(Instance_tournoi_report)
-print ("--------------------------------------------------------------------------------------------------------")
 
-main_menu = [("1", "Menu principal Joueur"),
-                ("2", "Menu principal Tournoi"),
-                ("3", "Quitter")]
-                 
-                 
-main_menu = [("1", "Créer un joueur"),
-                ("2", "Mettre à jour le classement d'un joueur"),
-                ("3", "Retour au menu principal")]                 
-"""
+        # print("Message info: Joueur ajouté au tournoi")
+        #
+        # print("--------------------------------------- TOURNOI DEMARRE --------------------------------------")
+        # print(
+        #     "Merci de saisir les scores de ce tour : 1 point pour le gagnant, 0 point pour le perdant et 0.5 pour chaque joueur en cas de match nul ")
+        # print("--- Score 1er match : ")
+        # player1_score = input("score 1er joueur : ")
+        # player2_score = input("score 2eme joueur : ")
+        # print("--- Score 2eme match : ")
+        # player3_score = input("score 1er joueur : ")
+        # player4_score = input("score 2eme joueur : ")
+        # print("--- Score 3eme match : ")
+        # player5_score = input("score 1er joueur : ")
+        # player6_score = input("score 2eme joueur")
+        # print("--- Score 4eme match : ")
+        # player7_score = input("score 1er joueur : ")
+        # player8_score = input("score 2eme joueur")
+
+
+
+
+
+
