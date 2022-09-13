@@ -1,13 +1,14 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
+
 
 
 
 class Player:
-    def __init__(self, id = 0,  first_name=None, last_name = None, birth_Date = None, gender = None, rank = 0, score = 0):
+    def __init__(self, id = 0,  first_name=None, last_name = None, birth_date = None, gender = None, rank = 0, score = 0.0):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
-        self.birth_Date = birth_Date
+        self.birth_date = birth_date
         self.gender = gender
         self.rank = rank
         self.score = score
@@ -17,10 +18,10 @@ class Player:
 
     def serialize(self):
         player_information = {}
-        player_information['id'] = self.id
+        player_information['id'] = int(self.id)
         player_information['Prenom'] = self.first_name
         player_information['Nom'] = self.last_name
-        player_information['Date de naissance'] = self.birth_Date
+        player_information['Date de naissance'] = self.birth_date
         player_information['Genre'] = self.gender
         player_information['Classement'] = int(self.rank)
         player_information['Score'] = int(self.score)
@@ -34,57 +35,67 @@ class Player:
                         player_info[3],
                         player_info[4],
                         player_info[5],
-
+                        player_info[6],
                         )
         db_player = self.db_player
         db_player.insert(player.serialize())
 
     def unserialized(self, serialized_player):
         id = serialized_player["id"]
-        first_name = serialized_player["prenom"]
-        last_name = serialized_player["nom"]
-        birth_Date = serialized_player["Date de naissance"]
-        gender = serialized_player["genre"]
+        first_name = serialized_player["Prenom"]
+        last_name = serialized_player["Nom"]
+        birth_date = serialized_player["Date de naissance"]
+        gender = serialized_player["Genre"]
         ranking = serialized_player["Classement"]
         score = serialized_player["Score"]
 
         return Player(id,
                       last_name,
                       first_name,
-                      birth_Date,
+                      birth_date,
                       gender,
                       ranking,
                       score,
                       )
 
-    def show(self):
+    def display_player(self):
 
         print("nom:" + self.first_name)
         print("prenom:" + self.last_name)
-        print("date de naissance:" + self.birth_Date)
+        print("date de naissance:" + self.birth_date)
         print("sexe:" + self.gender)
         print("classement:" + str(self.rank))
+
+
+    def initialize_score(self):
+        self.db_player.update({'Score': 0})
+        print("----> Message info : score initialisé dans la table des joueurs")
 
     def update_rank(self):
         valid_name = False
         while not valid_name:
-            player_name = input("Entrer le nom de famille du joueur : ")
-            if player_name.isalpha():
+            player_id = input("Merci de saisir l'id du joueur à mettre à jour : ")
+            if player_id.isdigit():
                 valid_name = True
             else:
-                print("Erreur: Merci de saisir un nom de famille valid")
+                print("Erreur: Merci de saisir un id valid")
 
-        valid_rank = False
-        while not valid_rank:
-            rank = input("Saisir le nouveau classement du joueur: ")
-            if rank.isdigit() and int(rank) >= 0:
-                valid_rank = True
-                db_player = self.db_player
-                db_player.update({'Classement': self.rank})
-                #self.db_player.update({'Classement': self.rank},self.last_name == player_name)
+            valid_rank = False
+            while not valid_rank:
+                rank = input("Merci de saisir le nouveau classement du joueur: ")
+                if rank.isdigit() and int(rank) >= 0:
+                    valid_rank = True
+                    query = Query()
+                    player = Player()
+                    player_modification = player.db_player.update(query.id == int(player_id))
+                    #player.db_player.update({'Classement': player.rank}, player.id == player_id)
+                    #player_modification = player.db_player.get(query.id == int(player_id))
+                    player_modification[5] = rank
 
-            else:
-                print("Erreur: merci de saisir un chiffre positif")
-            return rank
+
+
+                else:
+                    print("Erreur: merci de saisir un chiffre positif")
+                return rank
 
 

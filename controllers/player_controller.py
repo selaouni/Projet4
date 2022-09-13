@@ -1,12 +1,15 @@
 from controllers import base_controller
 from models import player
+import json
+from tinydb import Query
+from operator import attrgetter
 
 
 class CreatePlayerController:
 
     def __init__(self):
         self.player_value = []
-        self.player_info = ["id","Nom", "Prénom", "Date de naissance", "Genre", "Classement"]
+
         self.main_controller_menu = base_controller.MainMenuController()
 
     def add_id(self):
@@ -79,7 +82,7 @@ class CreatePlayerController:
         valid_gender = False
         validated_gender = None
         while not valid_gender:
-            gender = input("Saisir le genre du joueur 'Homme' ou 'Femme'")
+            gender = input("Saisir le genre du joueur 'Homme' ou 'Femme' : ")
 
             if gender == "Homme":
                 valid_gender = True
@@ -95,15 +98,16 @@ class CreatePlayerController:
         valid_rank = False
         while not valid_rank:
 
-            rank_player= input("Entrez le classement du joueur': ")
+            rank_player = input("Entrez le classement du joueur': ")
             if rank_player != "" and rank_player.isdigit() and int(rank_player) > 0 :
                 valid_rank = True
             else:
                 print("Erreur: merci de saisir un chiffre positif")
         return rank_player
 
-
-
+    def add_score(self):
+        default_score = 0
+        return default_score
 
 
 
@@ -116,15 +120,10 @@ class CreatePlayerController:
         self.player_value.append(self.add_birth_date())
         self.player_value.append(self.add_gender())
         self.player_value.append(self.add_rank())
+        self.player_value.append(self.add_score())
         self.player_model.save_player(self.player_value)
         print("Message info: joueur sauvegardé dans la base de donnée")
         self.main_controller_menu()
-
-class Player_Report:
-
-        def __call__(self):
-            print(" --------------------------- Rapport joueur --------------------------- ")
-
 
 
 

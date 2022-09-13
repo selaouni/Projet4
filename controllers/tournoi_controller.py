@@ -1,11 +1,10 @@
-
-#from views import menu
-from models import tournoi
+from models import tournois
 from models import player
-from controllers import base_controller
 from views import menu
-import json
-from tinydb import Query
+from controllers import base_controller
+
+
+
 
 
 class CreateTournoiController:
@@ -13,20 +12,19 @@ class CreateTournoiController:
     def __init__(self):
         self.menu_display = menu.Menu()
         self.tournoi_display = menu.Menu_tournoi()
-        #self.menu_tournoi = menu.Menu_tournoi()
         self.player = player.Player()
         self.tournoi_value = []
         self.tournoi_players = []
         self.main_controller_menu = base_controller.MainMenuController()
-        self.tournoi = tournoi.Tournoi()
-        self.players_serialized = []
+        self.tournoi = tournois.Tournoi()
+
 
 
 
     def add_name(self):
         valid_name = False
         while not valid_name:
-            tournoi_name = input("Saisir le nom du tournoi - exemple -> Round1: ")
+            tournoi_name = input("Saisir le nom du tournoi - exemple -> Tournoi1: ")
             if tournoi_name != "":
                 valid_name = True
             else:
@@ -81,177 +79,63 @@ class CreateTournoiController:
         number_tours = 4
         return number_tours
     def add_timing(self):
-        pass
+        self.tournoi.timing = self.tournoi_display.time_control_menu()
+        return self.tournoi.timing
 
     def add_description(self):
         description = input("Saisir la description du tournoi : ")
         return description
 
-    # def add_players(self, player_id):
-    #     self.tournoi_players.append(player_id)
-    #     return (self.tournoi_players)
-    def get_info_by_id(self, list_player_id):
-
-        query = Query()
-        for i in range(len(list_player_id)):
-            current_players = self.player.db_player.get(query.id == list_player_id[i])
-            self.players_serialized.append(current_players)
-            print("test current player", current_players)
-        return (self.players_serialized)
 
     def add_players(self):
-        player_id = self.tournoi_display.add_player_menu()
-        sorted_player = self.tournoi.sorted_first_time(self.get_info_by_id(player_id))
+        players_id = self.tournoi_display.add_player_menu()
+        self.tournoi.player_list = players_id
+        print("Liste des id : ", self.tournoi.player_list)
+
+        sorted_player = self.tournoi.sorted_first_time(self.tournoi.get_info_by_id(players_id))
         for i in sorted_player:
-            print(i)
-        player_id.clear()
-        self.tournoi.split(list(sorted_player))
+             print(i)
 
+        list(sorted_player).clear()
+        splitted_players = self.tournoi.split(list(sorted_player))
 
-    #     Show_players =
-    #
-    #     db_player.read_json('DB_players.json')
-    #
-    #     print(Show_players)
+        match_list = self.tournoi.make_match(splitted_players[0], splitted_players[1])
 
+        print("Message info: Les Joueurs sont ajoutés")
+        return match_list
 
-
-
-        #  with open('DB_players.json') as player_data:
-        # player_data = 'DB_players.json'
-        # data = json.loads(open(player_data).read())
-        # data = json.load(player_data)
-        # for i in data:
-        #     try:
-        #         result = i[id]["rank"]
-        #         return (result)
-        #     except KeyError:
-        #         print("cet id n'existe pas dans la base de donnée")
-        #
-        #     if i['id'] == str(id):
-        #         result = i["rank"]
-
-
-
+    def add_matchs(self):
+        self.tournoi.tour_list = self.tournoi.run_tour1()
+        return self.tournoi.tour_list
 
     def __call__(self):
-        self.tournoi_model = tournoi.Tournoi()
-        self.tournoi_value.append(self.add_name())
-        self.tournoi_value.append(self.add_Place())
-        self.tournoi_value.append(self.add_tournoi_date())
-        self.tournoi_value.append(self.number_of_tours())
+        self.tournoi_model = tournois.Tournoi()
+        self.tournoi_value.append(self.add_name()) #1
+        self.tournoi_value.append(self.add_Place())#2
+        self.tournoi_value.append(self.add_tournoi_date())#3
+        self.tournoi_value.append(self.number_of_tours())#4
+        self.tournoi_value.append(self.tournoi.player_list)#5
         self.add_players()
-
-        # print("---------------- Affichage des joueurs ----------------")
-        # # with open('DB_players.json') as player_data:
-        # #     data = json.load(player_data)
-        # #     print(json.dumps(data, sort_keys=True, indent=4))
-        #
-        # print("merci de choisir l'id'de joueurs à ajouter au tournoi")
-        #
-        # player1 = input("joueur N°1 : ")
-        # player2 = input("joueur N°2 : ")
-        # player3 = input("joueur N°3 : ")
-        # player4 = input("joueur N°4 : ")
-        # player5 = input("joueur N°5 : ")
-        # player6 = input("joueur N°6 : ")
-        # player7 = input("joueur N°7 : ")
-        # player8 = input("joueur N°8 : ")
-        # print("------- Les joueurs que vous avez choisi sont")
-
-        # NBR_PLAYER = 8
-        # player_list = []
-        # for i in range(NBR_PLAYER):
-        #     player_list = self.add_players(int(locals()["player" + str(i+1)]))
-        #
-        # #print("test player_list : ", player_list)
-        # sorted_player = []
-        # sorted_player = self.tournoi.sorted_first_time(self.get_info_by_id(player_list))
-        # for i in sorted_player:
-        #     print(i)
-        #
-        # player_list.clear()
-        #
-        # self.tournoi.split(list(sorted_player))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #self.tournoi.run_tournoi()
-
-        # NBR_PLAYER = 8
-        # for i in range(NBR_PLAYER):
-        #     result = [x for x in player_data if x[int("id")] == locals()["player" + str(i+1)]]
-        #     self.add_players(result)
-
-        # Reconvertir l'instance serialisée de la table player (json) en une instance class player
-
-        print("Message info: Joueur ajouté au tournoi")
-
-        #print("--------------------------------------- TOURNOI DEMARRE --------------------------------------")
-        # print(
-        #     "Merci de saisir les scores de ce tour : 1 point pour le gagnant, 0 point pour le perdant et 0.5 pour chaque joueur en cas de match nul ")
-        # print("--- Score 1er match : ")
-        # player1_score = input("score 1er joueur : ")
-        # player2_score = input("score 2eme joueur : ")
-        # print("--- Score 2eme match : ")
-        # player3_score = input("score 1er joueur : ")
-        # player4_score = input("score 2eme joueur : ")
-        # print("--- Score 3eme match : ")
-        # player5_score = input("score 1er joueur : ")
-        # player6_score = input("score 2eme joueur")
-        # print("--- Score 4eme match : ")
-        # player7_score = input("score 1er joueur : ")
-        # player8_score = input("score 2eme joueur")
-
-        self.tournoi_value.append(self.tournoi_players)
-
-        self.tournoi_value.append(self.add_timing())
-        self.tournoi_value.append(self.add_description())
+        #self.player.initialize_score()
+        self.tournoi_value.append(self.add_timing())  # 6
+        self.tournoi_display.menu_add_score()
+        self.tournoi.run_tour1()
+        self.tournoi.run_other_tours()
+        self.tournoi_value.append(self.add_description())#7
+        self.tournoi_value.append(self.tournoi.tour_list)#8
         self.tournoi_model.save_tournoi(self.tournoi_value)
-        print("Message info: Tournoi sauvegardé dans la base de donnée")
-        #self.tournoi_model.show_all()
+        print("Message info ----> Tournoi sauvegardé dans la base de donnée")
+        #tournoi show all info
         self.main_controller_menu()
 
 
 
-class TournoiReport:
-
-
-    def __call__(self):
-        print(" --------------------------- Rapport tournoi --------------------------- ")
 
 
 
 
 
-'''
-class Controller:
 
-    def __init__(self, Tournoi, Player, view):
 
-        # models
-        self.Tournoi: List[Tournoi] = []
-        self.Player: List[Player] = []
 
-        # views
-        self.view = view
 
-    def start_game(self):
-        pass
-    def Sort(player):
-        pass
-    def add_player(self, player):
-        pass
-
-'''

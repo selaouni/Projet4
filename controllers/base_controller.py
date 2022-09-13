@@ -2,14 +2,15 @@ from views import menu
 from controllers import player_controller
 from controllers import tournoi_controller
 from models import player
-from models import tour
+
 
 
 class MainMenuController:
 
     def __init__(self):
-        self.first_view = menu.FirstTitles()
+        self.first_view = menu.First_titles()
         self.menu_display = menu.Menu()
+
         self.option = None
 
     def __call__(self):
@@ -71,9 +72,6 @@ class PlayerControllerMenu:
         if data == "2":
             self.option = self.player_model.update_rank()
 
-
-
-
 class TournoiControllerMenu:
 
     def __init__(self):
@@ -98,16 +96,16 @@ class ReportControllerMenu:
 
     def __init__(self):
         self.player_controller = player_controller.CreatePlayerController()
-        self.player_report = player_controller.Player_Report()
-        self.tournoi_report = tournoi_controller.TournoiReport()
+        self.menu_player_report = menu.Player_report()
+        self.menu_tournoi_report = menu.Tournoi_report()
         self.menu_display = menu.Menu()
 
     def __call__(self):
         data = self.menu_display(self.menu_display.main_menu)
         if data == "5":
-            self.option = self.player_report()
+            self.option = self.menu_player_report()
         if data == "6":
-            self.option = self.tournoi_report()
+            self.option = self.menu_tournoi_report()
 
 
 class RankControllerMenu():
