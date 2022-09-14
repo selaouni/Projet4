@@ -15,6 +15,7 @@ class Tours:
         self.player1 = player.Player()
         self.player2 = player.Player()
         self.player_value = []
+        self.tour_serialized = []
 
     def serialize(self):
         tour_information = {}
@@ -33,8 +34,7 @@ class Tours:
         return Tours(name,
                      match_list,
                      date_time_start,
-                     date_time_end,
-                     )
+                     date_time_end,)
 
     def run(self, match_list, tournoi_object):
         """
@@ -52,15 +52,15 @@ class Tours:
         self.match_list = []
 
         while len(match_list) > 0:
-            match = self.match(self.tour_name, match_list[0], match_list[1])   # création de l'objet match
 
+            match = self.match(self.tour_name, match_list[0], match_list[1])   # création de l'objet match
             self.player1.unserialized(match_list[0])
             self.player2.unserialized(match_list[1])
-
             self.list_tour.append(match)
             del match_list[0:2]
         print("saisie pour le ", self.tour_name, " --> ")
         for match in self.list_tour:
+
             score_player1 = float(input("Merci de saisir le score du premier joueur  : "))
             match.score_player1 = score_player1
             self.player1.score = score_player1
@@ -78,6 +78,7 @@ class Tours:
         self.Date_Time_End = datetime.now()
         print("Tour terminé à : ", self.Date_Time_End)
         tour_object = Tours(self.tour_name, self.match_list, str(self.Date_Time_Start), str(self.Date_Time_End))
-        tour_serialized = []
-        tour_serialized.append(tour_object.serialize())
-        return tour_serialized
+
+        self.tour_serialized.append(tour_object.serialize())
+
+        return self.tour_serialized

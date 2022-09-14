@@ -3,6 +3,7 @@ from models import match
 from models import tour
 from tinydb import TinyDB, Query
 
+
 import pandas as pd
 
 
@@ -140,7 +141,6 @@ class Tournoi:
         players_sorted_by_score = []
         players_id = []
         tour_object = []
-
         for i in range(len(tour_list)):
             tour_object = self.tour.unserialize(tour_list)
 
@@ -159,36 +159,19 @@ class Tournoi:
         players_by_score = player_list.T.to_dict().values()
         return players_by_score
 
-    def run_tour1(self):
+    def run_first_tour(self, tournoi_object):
         """
         Cette fonction permet de lancer le premier tour en se basant sur une liste de joueurs  triée par classement
         """
-        self.tour_list = self.tour.run(self.player_list, Tournoi())
-        print(" test tour list round1:", self.tour_list)
+        self.tour_list = self.tour.run(self.player_list, tournoi_object)
         return self.tour_list
 
-    def run_other_tours(self):
+    def run_other_tours(self, tournoi_object):
         """
         Cette fonction permet de lancer le 2eme, 3eme et 4eme tour en se basant sur une liste de joueurs
         triée  cette fois ci par score
         """
-        print("-" * 80)
-        print("self.tour_list test", self.tour_list)
-        print("-" * 80)
-        # sorted_players = self.sorted_second_time(self.tour_list)
-        # print("-" * 80)
-        # print("sorted players_next tour", sorted_players)
-        # print("-" * 80)
-
-        for i in range(int(self.nbr_tours) - 1):
-            # self.sorted_players.clear()
-            print("test si c'est la bonne liste", self.tour_list)
-            sorted_players = self.sorted_second_time(self.tour_list)
-            lancer_tour = self.tour.run(list(sorted_players), self.tournoi_object)
-            print("-" * 80)
-
-            print("-" * 80)
-            print("Joueurs triés par score puis par classement test", sorted_players)
-            print("-" * 80)
-
-            self.tournoi_object.tour_list.append(lancer_tour)
+        for i in range(self.nbr_tours - 1):
+            sorted_players = self.sorted_second_time(self.tour_list[i])
+            launch_tour = self.tour.run(list(sorted_players), tournoi_object)
+            tournoi_object.tour_list = launch_tour

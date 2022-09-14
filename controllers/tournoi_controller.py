@@ -120,11 +120,14 @@ class CreateTournoiController:
         self.add_players()
         # self.player.initialize_score()
         self.tournoi_value.append(self.add_timing())
-        self.tournoi_display.menu_add_score()
-        self.tournoi.run_tour1()
-        self.tournoi.run_other_tours()
         self.tournoi_value.append(self.add_description())
+        self.tournoi_display.menu_add_score()
+        self.tournoi_model = tournois.Tournoi(self.tournoi_value[0], self.tournoi_value[1], self.
+                                              tournoi_value[2], self.tournoi_value[3], self.tournoi_value[4],
+                                              self.tournoi_value[5], self.tournoi_value[6])
+        self.tournoi.run_first_tour(self.tournoi_model)
         self.tournoi_value.append(self.tournoi.tour_list)
+        self.tournoi.run_other_tours(self.tournoi_model)
         self.tournoi_model.save_tournoi(self.tournoi_value)
         print("Message info ----> Tournoi sauvegardé dans la base de donnée")
         self.main_controller_menu()
