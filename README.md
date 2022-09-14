@@ -10,7 +10,7 @@ Développez un programme logiciel en Python
 Idriss Benjeloun
 
 ## Contributeur:    
-    - Sabah ELAOUNI    
+Sabah ELAOUNI    
 
 ## Description:   
 
@@ -26,17 +26,18 @@ Il s'agit d'un programme qui permet de gérer des tournois d'echecs, selon le co
 Les spécifications techniques sont comme suit:
 
 - DÉROULEMENT DE BASE DU TOURNOI:
-    1. Créer un nouveau tournoi.
-    2. Ajouter huit joueurs.
+    1. Création d'un nouveau tournoi.
+    2. Ajout de  huit joueurs.
     3. Géneration des paires de joueurs pour le premier tour.
-    4. Lorsque le tour est terminé saisir les résultats.
-    5. Répétition des étapes 3 et 4 pour les tours suivants jusqu'à ce que tous les tours soient joués, et que le tournoi soit terminé.
+    4. saisie les résultats une fois le tour est terminé.
+    5. Répétition des étapes 3 et 4 pour les tours suivants jusqu'à ce que tous les tours soient joués, 
+       et que le tournoi soit terminé.
  
 - GÉNÉRATION DES PAIRES DE JOUEURS : paires sont générées selon le système de tournoi suisse.
   - Menu principal du programme: 
   
-    ----------------------- Menu principal ---------------------------------
-    ------------------------------------------------------------------------
+    ----------------------- Menu principal -------------------------------
+    ----------------------------------------------------------------------
  - 1 - Créer un nouveau joueur
  - 2 - Mettre à jour un joueur
  - 3 - Créer un nouveau tournoi
@@ -70,17 +71,18 @@ Les spécifications techniques sont comme suit:
        >> python pip install flake8-html  
     - Génerer les rapports avec: 
        >> flake8 --format=html --htmldir=flake-report
+    - Generation du rapport en excluant "env" de l'analyse:
+       >> flake8 --format=html --htmldir=flake-report --exclude=./env
     - pour génerer la rappor dans le terminal d'un fichier.py spécifique vous pouvez utiliser la commande:
        >>  flake8 fichier.py ou flake8 dossier/fichier.py
 
   Le fichier .flak8 à la racine contient la configuration optée pour la génération du rapport.
 
-  
-     
 
 ## Historique des Versions:    
 
  *Principales versions sous Github*
+ - Flak8 and PEP8 verification 15/09/2022
  - Code update + adjustment of the MVC model + save datas correctly into DB - 14/09/2022
  - Code update (add, sort , split players, make matchs) - 05/09/2022 
  - Add the TinyDB tables (players & tournoi) - 06/07/2022
@@ -92,8 +94,9 @@ Les spécifications techniques sont comme suit:
 
 ## Acknowledgments (code inspiration): 
 
-- https://stackoverflow.com/questions/40827356/find-a-value-in-json-using-python
 - https://www.giacomodebidda.com/posts/mvc-pattern-in-python-introduction-and-basicmodel/
+- https://stackoverflow.com/questions/40827356/find-a-value-in-json-using-python
+- https://www.honeybadger.io/blog/python-instantiation-metaclass
 - https://www.freecodecamp.org/news/get-started-with-tinydb-in-python/
 - https://datatofish.com/sort-pandas-dataframe/
 - https://pypi.org/project/flake8-html/
