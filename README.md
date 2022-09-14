@@ -17,10 +17,10 @@ Sabah ELAOUNI
 Il s'agit d'un programme qui permet de gérer des tournois d'echecs, selon le context suivant:
 
 - le programme est lancé hors ligne depuis la console
-- le programme est developpé en Python en utilisant la programmation orientée objet
+- le programme est developpé en Python et utilise la programmation orientée objet
 - l'architecture utlisée est le modèle MVC (Modele, Vue, Controleur)
-- le module tinydb a été utilisé pour gérer la base de données
-- la flake8 a été utilisée pour le peluchage du code
+- le module Tinydb a été utilisé pour gérer la base de données
+- la Flake8 a été utilisée pour le peluchage du code
 
 
 Les spécifications techniques sont comme suit:
@@ -33,11 +33,12 @@ Les spécifications techniques sont comme suit:
     5. Répétition des étapes 3 et 4 pour les tours suivants jusqu'à ce que tous les tours soient joués, 
        et que le tournoi soit terminé.
  
-- GÉNÉRATION DES PAIRES DE JOUEURS : paires sont générées selon le système de tournoi suisse.
-  - Menu principal du programme: 
+- GÉNÉRATION DES PAIRES DE JOUEURS : les paires de jouzurs sont générées selon le système de tournoi suisse.
+
+- MENU PRINCIPAL DU PROJET: 
   
-    ----------------------- Menu principal -------------------------------
-    ----------------------------------------------------------------------
+  ----------------------- Menu principal -------------------------------
+  ----------------------------------------------------------------------
  - 1 - Créer un nouveau joueur
  - 2 - Mettre à jour un joueur
  - 3 - Créer un nouveau tournoi
@@ -45,7 +46,6 @@ Les spécifications techniques sont comme suit:
  - 5 - Rapport joueurs
  - 6 - Rapport tournoi
  - 7 - Quitter
-  
 
   
 ## Exécution du programme  
@@ -62,7 +62,7 @@ Les spécifications techniques sont comme suit:
     -> Nota:l'IDE utilisé pour ce projet : PYCHARM 2022.2.1 (Community Edition)
 
   
-## Rapport flake8:    
+## Rapport Flake8:    
   Le rapport Flak 8 de ce projet se trouve dans le repertoire flake-rapport , pour générer un nouveau rapport Flak 8:
 
     - Installer le module flake8 avec la commande:   
@@ -73,7 +73,7 @@ Les spécifications techniques sont comme suit:
        >> flake8 --format=html --htmldir=flake-report
     - Generation du rapport en excluant "env" de l'analyse:
        >> flake8 --format=html --htmldir=flake-report --exclude=./env
-    - pour génerer la rappor dans le terminal d'un fichier.py spécifique vous pouvez utiliser la commande:
+    - pour génerer le rapport dans le terminal d'un fichier.py spécifique vous pouvez utiliser la commande:
        >>  flake8 fichier.py ou flake8 dossier/fichier.py
 
   Le fichier .flak8 à la racine contient la configuration optée pour la génération du rapport.
