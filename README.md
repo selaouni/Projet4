@@ -34,6 +34,7 @@ Les spécifications techniques sont comme suit:
  
 - GÉNÉRATION DES PAIRES DE JOUEURS : paires sont générées selon le système de tournoi suisse.
   - Menu principal du programme: 
+  
     ----------------------- Menu principal ---------------------------------
     ------------------------------------------------------------------------
  - 1 - Créer un nouveau joueur
@@ -69,19 +70,30 @@ Les spécifications techniques sont comme suit:
        >> python pip install flake8-html  
     - Génerer les rapports avec: 
        >> flake8 --format=html --htmldir=flake-report
-    
+    - pour génerer la rappor dans le terminal d'un fichier.py spécifique vous pouvez utiliser la commande:
+       >>  flake8 fichier.py ou flake8 dossier/fichier.py
+
+  Le fichier .flak8 à la racine contient la configuration optée pour la génération du rapport.
+
   
      
 
 ## Historique des Versions:    
+
  *Principales versions sous Github*
- - Final 
- - Optimized 
- - First 
+ - Code update + adjustment of the MVC model + save datas correctly into DB - 14/09/2022
+ - Code update (add, sort , split players, make matchs) - 05/09/2022 
+ - Add the TinyDB tables (players & tournoi) - 06/07/2022
+ - Basic Controller , player & tournament controller Adjustment - 30/06/2022 
+ - Basic Controller and models Adjustment - 29/06/2022 
+ - Update main.py - 28/06/2022 
+ - First vesrion with the MVC model - 28/06/2022
+
 
 ## Acknowledgments (code inspiration): 
 
 - https://stackoverflow.com/questions/40827356/find-a-value-in-json-using-python
+- https://www.giacomodebidda.com/posts/mvc-pattern-in-python-introduction-and-basicmodel/
 - https://www.freecodecamp.org/news/get-started-with-tinydb-in-python/
 - https://datatofish.com/sort-pandas-dataframe/
 - https://pypi.org/project/flake8-html/
