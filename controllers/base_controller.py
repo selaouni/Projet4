@@ -4,13 +4,15 @@ from controllers import tournoi_controller
 from models import player
 
 
-
 class MainMenuController:
+    """
+    Dans cette classe on appelle les differentes classes du module "views", ce qui va permettre d'afficher d'abord
+    le menu principal et puis d'etre redirigé vers les sous menu associés
+    """
 
     def __init__(self):
         self.first_view = menu.First_titles()
         self.menu_display = menu.Menu()
-
         self.option = None
 
     def __call__(self):
@@ -40,9 +42,8 @@ class MainMenuController:
             self.option = ReportControllerMenu()
             self.report_menu_controller_redirect()
 
-        if data =="7":
+        if data == "7":
             exit()
-
 
     def player_menu_controller_redirect(self):
         return self.option()
@@ -56,6 +57,7 @@ class MainMenuController:
     def rank_menu_controller_redirect(self):
         return self.option()
 
+
 class PlayerControllerMenu:
 
     def __init__(self):
@@ -64,13 +66,13 @@ class PlayerControllerMenu:
         self.player_model = player.Player()
         self.menu_display = menu.Menu()
 
-
     def __call__(self):
         data = self.menu_display(self.menu_display.main_menu)
         if data == "1":
             self.option = self.player_controller()
         if data == "2":
             self.option = self.player_model.update_rank()
+
 
 class TournoiControllerMenu:
 
@@ -80,16 +82,12 @@ class TournoiControllerMenu:
         self.menu_display = menu.Menu()
         # self.run_tournoi = tour.Tours.run()
 
-
     def __call__(self):
         data = self.menu_display(self.menu_display.main_menu)
         if data == "3":
             self.option = self.tournoi_controller()
         if data == "4":
             self.option = self.run_tournoi()
-
-
-
 
 
 class ReportControllerMenu:
@@ -109,17 +107,14 @@ class ReportControllerMenu:
 
 
 class RankControllerMenu():
-
     def __init__(self):
 
         self.player_controller = player_controller.CreatePlayerController()
         self.menu_display = menu.Menu()
-        #self.rank_menu = player_controller.CreatePlayerController.add_rank()
+        # self.rank_menu = player_controller.CreatePlayerController.add_rank()
         self.rank_menu = player.Player.update_rank(player.Player)
 
     def __call__(self):
         data = self.menu_display(self.menu_display.main_menu)
         if data == "2":
             self.option = self.rank_menu()
-
-

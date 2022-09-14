@@ -2,7 +2,11 @@ from models import player
 from models import tournois
 
 NBR_PLAYER = 8
+
+
 class First_titles:
+
+    # En-tete principal
     def titles(self):
         print("-------------------- Bienvenue - Tournoi d'échecs --------------------")
         print("-" * 70)
@@ -12,15 +16,14 @@ class First_titles:
 
 
 class Menu:
-    main_menu = [
-                ("1", "Créer un nouveau joueur"),
-                ("2", "Mettre à jour un joueur"),
-                ("3", "Créer un nouveau tournoi"),
-                ("4", "Reprendre un tournoi"),
-                ("5", "Rapport joueurs"),
-                ("6", "Rapport tournoi"),
-                ("7", "Quitter")
-                 ]
+    # Menu principal affiché au tout debut de l'execution
+    main_menu = [("1", "Créer un nouveau joueur"),
+                 ("2", "Mettre à jour un joueur"),
+                 ("3", "Créer un nouveau tournoi"),
+                 ("4", "Reprendre un tournoi"),
+                 ("5", "Rapport joueurs"),
+                 ("6", "Rapport tournoi"),
+                 ("7", "Quitter")]
 
     def __call__(self, menu):
         for i in menu:
@@ -36,6 +39,7 @@ class Menu:
 
 
 class Menu_tournoi:
+    # Menu permet de renseigner les ids des joueurs à selectionnés pour un tournoi
     def add_player_menu(self):
 
         print("merci de choisir l'id'de joueurs à ajouter au tournoi")
@@ -54,6 +58,7 @@ class Menu_tournoi:
         return player_list
 
     def menu_add_score(self):
+        # affiché au moment de la saisie des scores d'un tour
 
         print("--------------------------------------- TOURNOI DEMARRE --------------------------------------")
         print("Merci de saisir les scores de chaque tour: ")
@@ -67,6 +72,8 @@ class Menu_tournoi:
 class Player_report:
     def __init__(self):
         self.player = player.Player()
+
+    # Affiche les rapports player
     def __call__(self):
         print("-" * 80)
         print(" --------------------------- Rapport des joueurs  --------------------------- ")
@@ -78,7 +85,8 @@ class Player_report:
             players_unserialized = self.player.unserialized(i)
 
             print(
-                f" {players_unserialized.first_name} {players_unserialized.last_name} - {players_unserialized.birth_date}"
+                f" {players_unserialized.first_name} {players_unserialized.last_name} -"
+                f" {players_unserialized.birth_date}"
                 f" - {players_unserialized.gender} - Classement : {players_unserialized.rank}")
 
         print("-" * 80)
@@ -90,7 +98,8 @@ class Player_report:
             players_unserialized = self.player.unserialized(i)
 
             print(
-                f"Classement : {players_unserialized.rank} - {players_unserialized.last_name} {players_unserialized.first_name} - {players_unserialized.birth_date}"
+                f"Classement : {players_unserialized.rank} - {players_unserialized.last_name}"
+                f" {players_unserialized.first_name} - {players_unserialized.birth_date}"
                 f" - {players_unserialized.gender} ")
 
         print("-" * 80)
@@ -101,8 +110,11 @@ class Player_report:
 
 
 class Tournoi_report:
+
     def __init__(self):
         self.tournoi = tournois.Tournoi()
+
+    # Affiche les rapports du tournoi
     def __call__(self):
         print("-" * 80)
         print(" --------------------------- Rapport tournoi ---------------------------------- ")
@@ -113,31 +125,11 @@ class Tournoi_report:
         for i in tournoi_info:
             tournoi_unserialized = self.tournoi.unserialized(i)
             print(
-                f" {tournoi_unserialized.name} - {tournoi_unserialized.place} - {tournoi_unserialized.date}"
+                f" {tournoi_unserialized.name} - {tournoi_unserialized.place} "
+                f" - {tournoi_unserialized.date}"
                 f" - {tournoi_unserialized.timing} - Description: {tournoi_unserialized.description} ")
         print("-" * 80)
         print("B - Liste de tous les tour d'un tournoi :")
 
         print("-" * 80)
         print("C - Liste de tous les matchs d'un tournoi :")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

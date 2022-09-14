@@ -4,9 +4,6 @@ from views import menu
 from controllers import base_controller
 
 
-
-
-
 class CreateTournoiController:
 
     def __init__(self):
@@ -17,9 +14,6 @@ class CreateTournoiController:
         self.tournoi_players = []
         self.main_controller_menu = base_controller.MainMenuController()
         self.tournoi = tournois.Tournoi()
-
-
-
 
     def add_name(self):
         valid_name = False
@@ -41,7 +35,6 @@ class CreateTournoiController:
                 print("Erreur: Merci de saisir une localisation correcte")
         return place
 
-
     def add_tournoi_date(self):
         date_list = []
         print("--------------Debut de la saisie de la date du tournoi----------------")
@@ -49,7 +42,8 @@ class CreateTournoiController:
         while not valid_day:
 
             self.birth_day = input("saisir le jour du tournoi: ")
-            if  int(self.birth_day) < 32 and len(self.birth_day) == 2 and self.birth_day != "00" and self.birth_day.isdigit():
+            if int(self.birth_day) < 32 and len(self.birth_day) == 2 \
+                    and self.birth_day != "00" and self.birth_day.isdigit():
                 valid_day = True
                 date_list.append(self.birth_day)
             else:
@@ -58,7 +52,8 @@ class CreateTournoiController:
         valid_month = False
         while not valid_month:
             self.birth_month = input("saisir le mois du tournoi:")
-            if int(self.birth_month) < 13 and len(self.birth_month) == 2 and self.birth_month != "00" and self.birth_month.isdigit():
+            if int(self.birth_month) < 13 and len(self.birth_month) == 2 \
+                    and self.birth_month != "00" and self.birth_month.isdigit():
                 valid_month = True
                 date_list.append(self.birth_month)
             else:
@@ -67,7 +62,7 @@ class CreateTournoiController:
         valid_year = False
         while not valid_year:
             self.birth_year = input("saisir l'année du tournoi: ")
-            if len(self.birth_year) == 4 and  self.birth_year != "0000" and self.birth_year.isdigit():
+            if len(self.birth_year) == 4 and self.birth_year != "0000" and self.birth_year.isdigit():
                 valid_year = True
                 date_list.append(self.birth_year)
             else:
@@ -78,6 +73,7 @@ class CreateTournoiController:
     def number_of_tours(self):
         number_tours = 4
         return number_tours
+
     def add_timing(self):
         self.tournoi.timing = self.tournoi_display.time_control_menu()
         return self.tournoi.timing
@@ -86,15 +82,20 @@ class CreateTournoiController:
         description = input("Saisir la description du tournoi : ")
         return description
 
-
     def add_players(self):
+        """
+        :return: liste des match divisée en deux
+        Cette fonction permet de recuprer les id des joueurs saisis, cherche les info associées à ce joueur dans
+        la BD et fait le tri par classement puis divise la liste en deux. Le return de cette fonction permet de
+        constituer les matchs par la suite
+        """
         players_id = self.tournoi_display.add_player_menu()
         self.tournoi.player_list = players_id
         print("Liste des id : ", self.tournoi.player_list)
 
         sorted_player = self.tournoi.sorted_first_time(self.tournoi.get_info_by_id(players_id))
         for i in sorted_player:
-             print(i)
+            print(i)
 
         list(sorted_player).clear()
         splitted_players = self.tournoi.split(list(sorted_player))
@@ -109,33 +110,21 @@ class CreateTournoiController:
         return self.tournoi.tour_list
 
     def __call__(self):
+
         self.tournoi_model = tournois.Tournoi()
-        self.tournoi_value.append(self.add_name()) #1
-        self.tournoi_value.append(self.add_Place())#2
-        self.tournoi_value.append(self.add_tournoi_date())#3
-        self.tournoi_value.append(self.number_of_tours())#4
-        self.tournoi_value.append(self.tournoi.player_list)#5
+        self.tournoi_value.append(self.add_name())
+        self.tournoi_value.append(self.add_Place())
+        self.tournoi_value.append(self.add_tournoi_date())
+        self.tournoi_value.append(self.number_of_tours())
+        self.tournoi_value.append(self.tournoi.player_list)
         self.add_players()
-        #self.player.initialize_score()
-        self.tournoi_value.append(self.add_timing())  # 6
+        # self.player.initialize_score()
+        self.tournoi_value.append(self.add_timing())
         self.tournoi_display.menu_add_score()
         self.tournoi.run_tour1()
         self.tournoi.run_other_tours()
-        self.tournoi_value.append(self.add_description())#7
-        self.tournoi_value.append(self.tournoi.tour_list)#8
+        self.tournoi_value.append(self.add_description())
+        self.tournoi_value.append(self.tournoi.tour_list)
         self.tournoi_model.save_tournoi(self.tournoi_value)
         print("Message info ----> Tournoi sauvegardé dans la base de donnée")
-        #tournoi show all info
         self.main_controller_menu()
-
-
-
-
-
-
-
-
-
-
-
-

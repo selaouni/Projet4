@@ -1,15 +1,10 @@
 from controllers import base_controller
 from models import player
-import json
-from tinydb import Query
-from operator import attrgetter
 
 
 class CreatePlayerController:
-
     def __init__(self):
         self.player_value = []
-
         self.main_controller_menu = base_controller.MainMenuController()
 
     def add_id(self):
@@ -44,15 +39,14 @@ class CreatePlayerController:
                 print("Erreur: merci de saisir un prénom valide ")
         return first_name
 
-
-
     def add_birth_date(self):
         birthdate_list = []
         print("-------------Debut de la saisie de la date---------------")
         valid_day = False
         while not valid_day:
             self.birth_day = input("Entrez le jour de naissance du joueur: ")
-            if  len(self.birth_day) == 2 and int(self.birth_day) < 32 and self.birth_day != "00" and self.birth_day.isdigit():
+            if len(self.birth_day) == 2 and int(self.birth_day) < 32 and self.birth_day != "00" \
+                    and self.birth_day.isdigit():
                 valid_day = True
                 birthdate_list.append(self.birth_day)
             else:
@@ -61,7 +55,8 @@ class CreatePlayerController:
         valid_month = False
         while not valid_month:
             self.birth_month = input("Entrez le mois de naissance En chiffre: ")
-            if  len(self.birth_month) == 2 and int(self.birth_month) < 13 and self.birth_month != "00" and self.birth_month.isdigit():
+            if len(self.birth_month) == 2 and int(self.birth_month) < 13 and self.birth_month != "00" \
+                    and self.birth_month.isdigit():
                 valid_month = True
                 birthdate_list.append(self.birth_month)
             else:
@@ -70,7 +65,8 @@ class CreatePlayerController:
         valid_year = False
         while not valid_year:
             self.birth_year = input("Entrez l'année de naissance du joueur: ")
-            if  len(self.birth_year) == 4 and int(self.birth_year) < 2023 and self.birth_year != "0000" and self.birth_year.isdigit():
+            if len(self.birth_year) == 4 and int(self.birth_year) < 2023 and self.birth_year != "0000" \
+                    and self.birth_year.isdigit():
                 valid_year = True
                 birthdate_list.append(self.birth_year)
             else:
@@ -99,7 +95,7 @@ class CreatePlayerController:
         while not valid_rank:
 
             rank_player = input("Entrez le classement du joueur': ")
-            if rank_player != "" and rank_player.isdigit() and int(rank_player) > 0 :
+            if rank_player != "" and rank_player.isdigit() and int(rank_player) > 0:
                 valid_rank = True
             else:
                 print("Erreur: merci de saisir un chiffre positif")
@@ -109,10 +105,7 @@ class CreatePlayerController:
         default_score = 0
         return default_score
 
-
-
     def __call__(self):
-
         self.player_model = player.Player()
         self.player_value.append(self.add_id())
         self.player_value.append(self.add_first_name())
@@ -124,20 +117,3 @@ class CreatePlayerController:
         self.player_model.save_player(self.player_value)
         print("Message info: joueur sauvegardé dans la base de donnée")
         self.main_controller_menu()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
