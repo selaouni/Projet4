@@ -26,7 +26,7 @@ class Player:
         player_information['Nom'] = self.last_name
         player_information['Date de naissance'] = self.birth_date
         player_information['Genre'] = self.gender
-        player_information['Classement'] = int(self.rank)
+        player_information['Classement'] = self.rank
         player_information['Score'] = int(self.score)
         return player_information
 
@@ -81,9 +81,10 @@ class Player:
         """
         Cette fonction permet de mettre à jour le classement d'un joueur à partir du menu principale.
         """
+        self.player = Player()
         valid_name = False
         while not valid_name:
-            player_id = input("Merci de saisir l'id du joueur à màj: ")
+            player_id = input("Merci de saisir l'id du joueur à mettre à jour ")
             if player_id.isdigit():
                 valid_name = True
             else:
@@ -93,14 +94,15 @@ class Player:
             while not valid_rank:
                 rank = input("Merci de saisir le nouveau classement: ")
                 if rank.isdigit() and int(rank) >= 0:
+
                     valid_rank = True
                     # player = player.db_player.update(query.id == int(player_id))
                     query = Query()
-                    self.db_player.update({'Classement': rank}, query.id == player_id)
+                    self.player.db_player.update({'Classement': int(rank)}, query.id == int(player_id))
 
                     # player.db_player.update({'Classement': player.rank}, player.id == player_id)
                     # player_modification = player.db_player.get(query.id == int(player_id))
                     # player[5] = rank
                 else:
                     print("Erreur: merci de saisir un chiffre positif")
-                return rank
+                print("----> Message info : le classement a été mis à jour dans la base de données")

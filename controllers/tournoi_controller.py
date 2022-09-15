@@ -14,6 +14,8 @@ class CreateTournoiController:
         self.tournoi_players = []
         self.main_controller_menu = base_controller.MainMenuController()
         self.tournoi = tournois.Tournoi()
+        self.players_id = []
+        self.players_id = []
 
     def add_name(self):
         valid_name = False
@@ -90,7 +92,7 @@ class CreateTournoiController:
         constituer les matchs par la suite
         """
         players_id = self.tournoi_display.add_player_menu()
-        self.tournoi.player_list = players_id
+        self.players_id.append(players_id)
         print("Liste des id : ", self.tournoi.player_list)
 
         sorted_player = self.tournoi.sorted_first_time(self.tournoi.get_info_by_id(players_id))
@@ -101,12 +103,12 @@ class CreateTournoiController:
         splitted_players = self.tournoi.split(list(sorted_player))
 
         match_list = self.tournoi.make_match(splitted_players[0], splitted_players[1])
-
+        self.tournoi.player_list = match_list
         print("Message info: Les Joueurs sont ajoutés")
-        return match_list
+        return self.tournoi.player_list
 
     def add_matchs(self):
-        self.tournoi.tour_list = self.tournoi.run_tour1()
+        self.tournoi.tour_list = self.tournoi.run_first_tour()
         return self.tournoi.tour_list
 
     def __call__(self):
@@ -116,7 +118,7 @@ class CreateTournoiController:
         self.tournoi_value.append(self.add_Place())
         self.tournoi_value.append(self.add_tournoi_date())
         self.tournoi_value.append(self.number_of_tours())
-        self.tournoi_value.append(self.tournoi.player_list)
+        self.tournoi_value.append(self.players_id)
         self.add_players()
         # self.player.initialize_score()
         self.tournoi_value.append(self.add_timing())
