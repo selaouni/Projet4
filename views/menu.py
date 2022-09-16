@@ -1,9 +1,5 @@
-from models import player
-from models import tournois
-from models import tournois
-
-from tinydb import Query
-import json
+from controllers import player_controller
+from controllers import tournoi_controller
 
 NBR_PLAYER = 8
 
@@ -75,124 +71,21 @@ class Menu_tournoi:
 
 class Player_report:
     def __init__(self):
-        self.player = player.Player()
-        self.tournoi = tournois.Tournoi()
-
+        self.player = player_controller.CreatePlayerController()
     # Affiche les rapports player
     def __call__(self):
-        print("-" * 80)
-        print(" --------------------------- Rapport des joueurs  --------------------------- ")
-        print("-" * 80)
-        print("A - Joueurs classés par ordre alphabétique :")
-        players_info = self.player.db_player.all()
-        players_info = sorted(players_info, key=lambda x: x['Nom'])
-        for i in players_info:
-            players_unserialized = self.player.unserialized(i)
-
-            print(
-                f" {players_unserialized.first_name} {players_unserialized.last_name} -"
-                f" {players_unserialized.birth_date}"
-                f" - {players_unserialized.gender} - Classement : {players_unserialized.rank}")
-
-        print("-" * 80)
-        print("B - Joueurs listés par classement:")
-        players_info = list(self.player.db_player.all())
-        players_info = sorted(players_info, key=lambda x: int(x['Classement']), reverse=True)
-
-        for i in players_info:
-            players_unserialized = self.player.unserialized(i)
-
-            print(
-                f"Classement : {players_unserialized.rank} - {players_unserialized.last_name}"
-                f" {players_unserialized.first_name} - {players_unserialized.birth_date}"
-                f" - {players_unserialized.gender} ")
-
-        print("-" * 80)
-        print("C - Liste de tous les joueurs d'un tournoi par ordre alphabétique :")
-
-        query = Query()
-        tournoi_info = self.tournoi.db_tournoi.all()
-
-        #self.player.db_player.update({'Score': match.score_player2}, query.id == match.player2['id'])
-
-
-        for i in tournoi_info:
-            tournois_unserialized = self.tournoi.unserialized(i)
-            print(
-                f": {tournois_unserialized.name} - {tournois_unserialized.date}"
-                f" {tournois_unserialized.player_list} - Description: {tournois_unserialized.description}")
-
-
-        print("-" * 80)
-        print("D - Liste de tous les joueurs d'un tournoi par classement :")
-
-        for i in tournoi_info:
-            tournois_unserialized = self.tournoi.unserialized(i)
-            print(
-                f": {tournois_unserialized.name} - {tournois_unserialized.tour_list}")
-
+       self.player.player_report()
 
 
 class Tournoi_report:
 
-    def __init__(self):
-        self.tournoi = tournois.Tournoi()
-
     # Affiche les rapports du tournoi
-    def __call__(self):
-        print("-" * 80)
-        print(" --------------------------- Rapport tournoi ---------------------------------- ")
-        print("-" * 80)
-        print("A - Liste de tous les tournois :")
-        tournoi_info = self.tournoi.db_tournoi.all()
-        for i in tournoi_info:
-            tournoi_unserialized = self.tournoi.unserialized(i)
-            print(
-                f" {tournoi_unserialized.name} - {tournoi_unserialized.place} "
-                f" - {tournoi_unserialized.date}"
-                f" - {tournoi_unserialized.timing} - Description: {tournoi_unserialized.description} ")
-        print("-" * 80)
-        print("B - Liste de tous les tour d'un tournoi :")
-        for i in tournoi_info:
-            tournoi_unserialized = self.tournoi.unserialized(i)
-            print(
-                f" {tournoi_unserialized.name} - {tournoi_unserialized.tour_list} - {tournoi_unserialized.place} "
-                f" - {tournoi_unserialized.date}")
-
-
-        print("-" * 80)
-        print("C - Liste de tous les matchs d'un tournoi :")
-        tournoi_unserialized = []
-        for i in tournoi_info:
-            tournoi_unserialized = self.tournoi.unserialized(i)
-            print(
-                  f" {tournoi_unserialized.name} - {tournoi_unserialized.tour_list}")
-
-        print("-" * 80)
-
-
-class QuitTournoi:
-    def __call__(self, choice):
-        print("Voulez vous sauvegarder et quitter le tournoi en cours ? Y / N")
-        valid_choice = True
-        while valid_choice:
-            choice = input("--->")
-            if choice == 'Y':
-                break
-            if choice == 'N':
-                pass
-
-class ReLoadTournament:
     def __init__(self):
-        self.tournoi =tournois.Tournoi()
+        self.tournoi = tournoi_controller.CreateTournoiController()
+
     def __call__(self):
+        self.tournoi.tournoi_report()
 
-        tournaments_reloaded = False
-        print("------------------------ Reprendre un tournoi ------------------------\n")
-        for tournoi in self.tournoi.db_tournoi:
-            if tournoi["liste des Tours"] != []:
-                if len(tournoi["liste des Tours"]) < int(tournoi["Numbre of tours"]):
-                    print(f" {tournament['nom du tournoi']} {tournament['place']}")
-                    tournaments_reloaded = True
 
-        return tournaments_reloaded
+
+

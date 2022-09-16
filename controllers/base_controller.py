@@ -126,7 +126,7 @@ class RankControllerMenu():
 
         self.player_controller = player_controller.CreatePlayerController()
         self.menu_display = menu.Menu()
-        self.rank_menu = player.Player.update_rank(player.Player)
+        self.rank_menu = player_controller.CreatePlayerController.update_rank(player.Player)
 
     def __call__(self):
         data = self.menu_display(self.menu_display.main_menu)

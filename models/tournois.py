@@ -1,10 +1,5 @@
-from models import player
-from models import match
-from models import tour
-from tinydb import TinyDB, Query
-import json
 
-import pandas as pd
+from tinydb import TinyDB
 
 
 class Tournoi:
@@ -25,10 +20,6 @@ class Tournoi:
         self.timing = timing
         self.description = description
         self.tour_list = tour_list
-        self.player = player.Player()
-        self.match = match.Matchs()
-        self.tour = tour.Tours()
-        self.players_extracted = []
         self.db_tournoi = TinyDB('DB_tournoi.json')
 
     def serialize(self):
@@ -79,109 +70,5 @@ class Tournoi:
                        tour_list,
                        )
 
-    def get_info_by_id(self, list_player_id):
-        """
-        :param: Liste  des id saisis par l'utilisateur
-        :return: une liste avec les informations associées à chaque id
-        Cette fonction permet récuprer de la base de donnée "DB_players.json" toutes les informations
-        d'un joueurs à partir de l'id donné
-        """
 
-        query = Query()
-        for i in range(len(list_player_id)):
-            current_players = self.player.db_player.get(query.id == list_player_id[i])
-            self.players_extracted.append(current_players)
-        return self.players_extracted
 
-    def sorted_first_time(self, list_player_to_sort):
-        """
-        :param:  liste avec les informations associées à un joueurs
-        :return: Liste triée par classement
-        Cette fonction concerne le premier tour
-        """
-        player_list = pd.DataFrame(list_player_to_sort)
-        player_list = player_list.sort_values(("Classement"), ascending=False)
-        self.player_list = player_list.T.to_dict().values()
-        return(self.player_list)
-
-    def split(self, sorted_player_to_split):
-        """
-        :param:  Liste joueurs triée par classement
-        :return: Liste joueurs divisée en deux listes
-        Cette fonction concerne le premier tour
-        """
-        half = len(sorted_player_to_split) // 2
-        player_splitted = sorted_player_to_split[:half], sorted_player_to_split[half:]
-        return player_splitted
-
-    def make_match(self, players_list1, players_list2):
-        """
-        :param:  Liste joueurs triée et divisée en deux listes
-        :return: List des pairs du match
-        """
-        file = open('DB_players.json')
-        json.load(file)
-        players_match = []
-        for i in range(len(self.player_list) // 2):
-            players_match.append(players_list1[i])
-            players_match.append(players_list2[i])
-        self.player_list = players_match
-        print("-" * 140)
-        print("**** Génaréation des pairs : ")
-        for i in range(0, (self.nbr_tours * 2), 2):
-            print("Joueurs match", i + 1, " ----> :", players_match[i], players_match[i + 1])
-            print("-" * 140)
-        return self.player_list
-
-    def sorted_second_time(self, tour_list):
-        """
-        :param:  Liste joueurs du tournoi
-        :return: List joueurs triés par score puis par classement si égalité au niveau du score
-        Cette fonction s'applique à partir du 2eme tour
-        """
-        players_with_score = []
-        players_sorted_by_score = []
-        players_id = []
-        tour_object = []
-        for i in range(len(tour_list)):
-            tour_object = self.tour.unserialize(tour_list)
-
-        for m in tour_object.match_list:
-            for p in m:
-                players_with_score.append(p)
-
-        for p in players_sorted_by_score:
-            players_id.append(p[0])
-
-        info_player = self.get_info_by_id(players_id)
-        # for i in range(len(info_player)):
-        #     players_object = self.player.unserialized(info_player[i])
-        player_list = pd.DataFrame(info_player)
-        player_list = player_list.sort_values(by=['Score', 'Classement'], ascending=False)
-        players_by_score = player_list.T.to_dict().values()
-        return players_by_score
-
-    def run_first_tour(self, tournoi_object):
-        """
-        Cette fonction permet de lancer le premier tour en se basant sur une liste de joueurs  triée par classement
-        """
-        self.tour_list = self.tour.run(self.player_list, tournoi_object)
-        return self.tour_list
-
-    def run_other_tours(self, tournoi_object):
-        """
-        Cette fonction permet de lancer le 2eme, 3eme et 4eme tour en se basant sur une liste de joueurs
-        triée  cette fois ci par score
-        """
-        self.sorted_players = []
-        for i in range(self.nbr_tours - 1):
-
-            file = open('DB_players.json')
-            json.load(file)
-            self.sorted_players = self.sorted_second_time(self.tour_list[i])
-            launched_tour = self.tour.run(list(self.sorted_players), tournoi_object)
-            tournoi_object.tour_list = launched_tour
-
-        print("*" * 140)
-        print("-------------------------------------------  TOURNOI TERMINE ----------------------------------------")
-        print("*" * 140)

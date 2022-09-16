@@ -19,6 +19,9 @@ class Player:
 
         self.db_player = TinyDB('DB_players.json')
 
+    def __str__(self):
+        return f"{self.id} - {self.last_name} - {self.first_name} - Classement - {self.rank}."
+
     def serialize(self):
         player_information = {}
         player_information['id'] = int(self.id)
@@ -66,36 +69,4 @@ class Player:
                       )
 
 
-    def initialize_score(self):
-        self.db_player.update({'Score': 0})
-        print("Message info : score initialisé dans la table des joueurs")
 
-    def update_rank(self):
-        """
-        Cette fonction permet de mettre à jour le classement d'un joueur à partir du menu principale.
-        """
-        self.player = Player()
-        valid_name = False
-        while not valid_name:
-            player_id = input("Merci de saisir l'id du joueur à mettre à jour ")
-            if player_id.isdigit():
-                valid_name = True
-            else:
-                print("Erreur: Merci de saisir un id valid")
-
-            valid_rank = False
-            while not valid_rank:
-                rank = input("Merci de saisir le nouveau classement: ")
-                if rank.isdigit() and int(rank) >= 0:
-
-                    valid_rank = True
-                    # player = player.db_player.update(query.id == int(player_id))
-                    query = Query()
-                    self.player.db_player.update({'Classement': int(rank)}, query.id == int(player_id))
-
-                    # player.db_player.update({'Classement': player.rank}, player.id == player_id)
-                    # player_modification = player.db_player.get(query.id == int(player_id))
-                    # player[5] = rank
-                else:
-                    print("Erreur: merci de saisir un chiffre positif")
-                print("----> Message info : le classement a été mis à jour dans la base de données")
