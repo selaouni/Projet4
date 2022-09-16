@@ -14,8 +14,8 @@ class Player:
         self.last_name = last_name
         self.birth_date = birth_date
         self.gender = gender
-        self.rank = rank
-        self.score = score
+        self.rank = int(rank)
+        self.score = int(score)
 
         self.db_player = TinyDB('DB_players.json')
 
@@ -65,13 +65,6 @@ class Player:
                       score,
                       )
 
-    def display_player(self):
-
-        print("nom:" + self.first_name)
-        print("prenom:" + self.last_name)
-        print("date de naissance:" + self.birth_date)
-        print("sexe:" + self.gender)
-        print("classement:" + str(self.rank))
 
     def initialize_score(self):
         self.db_player.update({'Score': 0})

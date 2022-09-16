@@ -2,6 +2,7 @@ from models import tournois
 from models import player
 from views import menu
 from controllers import base_controller
+import json
 
 
 class CreateTournoiController:
@@ -14,7 +15,6 @@ class CreateTournoiController:
         self.tournoi_players = []
         self.main_controller_menu = base_controller.MainMenuController()
         self.tournoi = tournois.Tournoi()
-        self.players_id = []
         self.players_id = []
 
     def add_name(self):
@@ -39,7 +39,7 @@ class CreateTournoiController:
 
     def add_tournoi_date(self):
         date_list = []
-        print("--------------Debut de la saisie de la date du tournoi----------------")
+        print("-------------- Debut saisie de la date du tournoi----------------")
         valid_day = False
         while not valid_day:
 
@@ -70,11 +70,13 @@ class CreateTournoiController:
             else:
                 print("Erreur: Merci de saisir une année à 4 chiffres ")
 
+        print("-------------- Fin saisie de la date du tournoi ----------------")
+
         return f"{date_list[0]}/{date_list[1]}/{date_list[2]}"
 
     def number_of_tours(self):
-        number_tours = 4
-        return number_tours
+        tour_nbr = 4
+        return tour_nbr
 
     def add_timing(self):
         self.tournoi.timing = self.tournoi_display.time_control_menu()
@@ -93,9 +95,13 @@ class CreateTournoiController:
         """
         players_id = self.tournoi_display.add_player_menu()
         self.players_id.append(players_id)
-        print("Liste des id : ", self.tournoi.player_list)
-
+        print("Liste des id : ", players_id)
         sorted_player = self.tournoi.sorted_first_time(self.tournoi.get_info_by_id(players_id))
+        file = open('DB_players.json')
+        json.load(file)
+        self.player.db_player.update({'Score': 0.0})
+        self.player.db_player.update({'Score': 0.0})
+
         for i in sorted_player:
             print(i)
 
@@ -104,7 +110,7 @@ class CreateTournoiController:
 
         match_list = self.tournoi.make_match(splitted_players[0], splitted_players[1])
         self.tournoi.player_list = match_list
-        print("Message info: Les Joueurs sont ajoutés")
+        print("Message info ----> Message info: Les Joueurs sont ajoutés")
         return self.tournoi.player_list
 
     def add_matchs(self):
@@ -113,7 +119,7 @@ class CreateTournoiController:
 
     def __call__(self):
 
-        self.tournoi_model = tournois.Tournoi()
+        self.tournoi_object = tournois.Tournoi()
         self.tournoi_value.append(self.add_name())
         self.tournoi_value.append(self.add_Place())
         self.tournoi_value.append(self.add_tournoi_date())
@@ -124,12 +130,13 @@ class CreateTournoiController:
         self.tournoi_value.append(self.add_timing())
         self.tournoi_value.append(self.add_description())
         self.tournoi_display.menu_add_score()
-        self.tournoi_model = tournois.Tournoi(self.tournoi_value[0], self.tournoi_value[1], self.
-                                              tournoi_value[2], self.tournoi_value[3], self.tournoi_value[4],
-                                              self.tournoi_value[5], self.tournoi_value[6])
-        self.tournoi.run_first_tour(self.tournoi_model)
+        self.tournoi_object = tournois.Tournoi(self.tournoi_value[0], self.tournoi_value[1], self.
+                                               tournoi_value[2], self.tournoi_value[3], self.tournoi_value[4],
+                                               self.tournoi_value[5], self.tournoi_value[6])
+        self.tournoi.run_first_tour(self.tournoi_object)
         self.tournoi_value.append(self.tournoi.tour_list)
-        self.tournoi.run_other_tours(self.tournoi_model)
-        self.tournoi_model.save_tournoi(self.tournoi_value)
+        self.tournoi.run_other_tours(self.tournoi_object)
+        self.tournoi_object.save_tournoi(self.tournoi_value)
         print("Message info ----> Tournoi sauvegardé dans la base de donnée")
+        print("*" * 140)
         self.main_controller_menu()

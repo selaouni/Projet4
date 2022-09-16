@@ -2,7 +2,7 @@ from models import player
 from models import match
 from models import tour
 from tinydb import TinyDB, Query
-
+import json
 
 import pandas as pd
 
@@ -12,7 +12,7 @@ class Tournoi:
                  place=None,
                  date=None,
                  nbr_tours=4,
-                 player_list=[],
+                 player_list=None,
                  timing=None,
                  description=None,
                  tour_list=()):
@@ -119,18 +119,20 @@ class Tournoi:
         :param:  Liste joueurs triée et divisée en deux listes
         :return: List des pairs du match
         """
-
+        file = open('DB_players.json')
+        json.load(file)
         players_match = []
         for i in range(len(self.player_list) // 2):
             players_match.append(players_list1[i])
             players_match.append(players_list2[i])
         self.player_list = players_match
-        print("------ matchs constitués : ")
+        print("-" * 140)
+        print("**** Génaréation des pairs : ")
         for i in range(0, (self.nbr_tours * 2), 2):
-            print(players_match[i], players_match[i + 1])
+            print("Joueurs match", i + 1, " ----> :", players_match[i], players_match[i + 1])
+            print("-" * 140)
         return self.player_list
 
-    # Sort players by score
     def sorted_second_time(self, tour_list):
         """
         :param:  Liste joueurs du tournoi
@@ -171,7 +173,15 @@ class Tournoi:
         Cette fonction permet de lancer le 2eme, 3eme et 4eme tour en se basant sur une liste de joueurs
         triée  cette fois ci par score
         """
+        self.sorted_players = []
         for i in range(self.nbr_tours - 1):
-            sorted_players = self.sorted_second_time(self.tour_list[i])
-            launch_tour = self.tour.run(list(sorted_players), tournoi_object)
-            tournoi_object.tour_list = launch_tour
+
+            file = open('DB_players.json')
+            json.load(file)
+            self.sorted_players = self.sorted_second_time(self.tour_list[i])
+            launched_tour = self.tour.run(list(self.sorted_players), tournoi_object)
+            tournoi_object.tour_list = launched_tour
+
+        print("*" * 140)
+        print("-------------------------------------------  TOURNOI TERMINE ----------------------------------------")
+        print("*" * 140)

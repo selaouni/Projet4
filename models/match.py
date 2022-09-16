@@ -19,3 +19,6 @@ class Matchs:
         Match_information['Score 1eme joueur'] = self.score_player1
         Match_information['Score 2eme joueur'] = self.score_player2
         return Match_information
+
+    def __str__(self):
+        return f"{self.match_number} : {self.player1} --CONTRE-- {self.player2}."

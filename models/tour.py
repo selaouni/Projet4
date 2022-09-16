@@ -50,7 +50,6 @@ class Tours:
         self.tour_name = "Tour " + str(len(tournoi_object.tour_list) + 1)
         self.list_tour = []
         self.match_list = []
-
         while len(match_list) > 0:
 
             match = self.match(self.tour_name, match_list[0], match_list[1])   # création de l'objet match
@@ -58,13 +57,15 @@ class Tours:
             self.player2.unserialized(match_list[1])
             self.list_tour.append(match)
             del match_list[0:2]
-        print("saisie pour le ", self.tour_name, " --> ")
+        print("----- Début saisie ", self.tour_name, "------")
+        count = 0
         for match in self.list_tour:
-
-            score_player1 = float(input("Merci de saisir le score du premier joueur  : "))
+            count += 1
+            print("Match --> ", count)
+            score_player1 = float(input("Score du premier joueur  : "))
             match.score_player1 = score_player1
             self.player1.score = score_player1
-            score_player2 = input("Merci de saisir le score du deuxiem joueur : ")
+            score_player2 = input("Score du deuxiem joueur : ")
             match.score_player2 = float(score_player2)
             self.player2.score = float(score_player2)
             self.match_list.append(([match.player1['id'],

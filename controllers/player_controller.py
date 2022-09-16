@@ -115,5 +115,5 @@ class CreatePlayerController:
         self.player_value.append(self.add_rank())
         self.player_value.append(self.add_score())
         self.player_model.save_player(self.player_value)
-        print("Message info: joueur sauvegardé dans la base de donnée")
+        print("------> Message info: joueur sauvegardé dans la base de donnée")
         self.main_controller_menu()

@@ -32,7 +32,8 @@ class MainMenuController:
             self.tournoi_menu_controller_redirect()
 
         if data == "4":
-            pass
+            self.option = RepriseTournoi()
+            self.reprise_menu_controller_redirect()
 
         if data == "5":
             self.option = ReportControllerMenu()
@@ -52,6 +53,9 @@ class MainMenuController:
         return self.option()
 
     def report_menu_controller_redirect(self):
+        return self.option()
+
+    def reprise_menu_controller_redirect(self):
         return self.option()
 
     def rank_menu_controller_redirect(self):
@@ -86,8 +90,19 @@ class TournoiControllerMenu:
         data = self.menu_display(self.menu_display.main_menu)
         if data == "3":
             self.option = self.tournoi_controller()
+
+
+class RepriseTournoi():
+    def __init__(self):
+        self.menu_display1 = menu.Menu()
+        self.menu_display2 = menu.ReLoadTournament()
+
+    def __call__(self):
+
+        data = self.menu_display1(self.menu_display1.main_menu)
         if data == "4":
-            self.option = self.run_tournoi()
+            self.option = self.menu_display2()
+            print("test")
 
 
 class ReportControllerMenu:
@@ -111,7 +126,6 @@ class RankControllerMenu():
 
         self.player_controller = player_controller.CreatePlayerController()
         self.menu_display = menu.Menu()
-        # self.rank_menu = player_controller.CreatePlayerController.add_rank()
         self.rank_menu = player.Player.update_rank(player.Player)
 
     def __call__(self):
