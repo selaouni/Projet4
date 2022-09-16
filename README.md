@@ -98,6 +98,7 @@ Les spécifications techniques sont comme suit:
 - https://stackoverflow.com/questions/40827356/find-a-value-in-json-using-python
 - https://www.honeybadger.io/blog/python-instantiation-metaclass
 - https://www.freecodecamp.org/news/get-started-with-tinydb-in-python/
+- https://www.skillsugar.com/how-to-count-the-number-of-for-loop-iterations-in-python
 - https://datatofish.com/sort-pandas-dataframe/
 - https://pypi.org/project/flake8-html/
 - Discord DA python
