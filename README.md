@@ -101,4 +101,5 @@ Les spécifications techniques sont comme suit:
 - https://www.skillsugar.com/how-to-count-the-number-of-for-loop-iterations-in-python
 - https://datatofish.com/sort-pandas-dataframe/
 - https://pypi.org/project/flake8-html/
+- https://edk2-docs.gitbook.io/edk-ii-python-development-process-specification/environment_setup_and_example/2_create_project_configuration_file_for_flake8
 - Discord DA python
